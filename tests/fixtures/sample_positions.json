@@ -1,0 +1,26 @@
+[
+  {
+    "account": "DU2515295",
+    "contract": {
+      "symbol": "VTI",
+      "secType": "STK",
+      "exchange": "ARCA",
+      "currency": "USD",
+      "conId": 12345
+    },
+    "position": 100.0,
+    "avgCost": 200.50
+  },
+  {
+    "account": "DU2515295",
+    "contract": {
+      "symbol": "TLT",
+      "secType": "STK",
+      "exchange": "NASDAQ",
+      "currency": "USD",
+      "conId": 54321
+    },
+    "position": 50.0,
+    "avgCost": 95.30
+  }
+]
