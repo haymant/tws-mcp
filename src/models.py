@@ -1,5 +1,15 @@
 from pydantic import BaseModel
-from typing import Optional, List, Dict, Any
+from typing import Optional, List, Dict, Any, TYPE_CHECKING
+from dataclasses import dataclass
+
+if TYPE_CHECKING:
+    from .tws_client import TWSClient
+
+
+@dataclass
+class AppContext:
+    """Application context for MCP server."""
+    tws: 'TWSClient'
 
 class ContractRequest(BaseModel):
     symbol: str

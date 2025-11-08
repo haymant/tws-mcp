@@ -24,8 +24,147 @@ const history = await ibkr_get_historical_data({
 
 // Start real-time streaming
 await ibkr_start_market_data_resource({symbol: "AAPL"});
-subscribe("ibkr://market-data/AAPL_STK_SMART_USD");
+subscribe("ibkr://market-data/AAPL");
 ```
+
+---
+
+## How Market Data Streaming Works
+
+### Architecture Overview
+
+The market data streaming system uses an **event-driven MCP resource pattern** with three layers:
+
+#### 1. MCP Resource Layer (Server)
+
+**Resource Definition:**
+The server exposes market data as MCP resources with the URI pattern `ibkr://market-data/{resource_id}`.
+
+**Starting a Stream:**
+When you call `ibkr_start_market_data_resource`, the server:
+
+1. Creates a resource ID based on security type:
+   - Stocks: `"AAPL"` → `ibkr://market-data/AAPL`
+   - Forex: `"EUR"+"USD"` → `ibkr://market-data/EUR.USD`
+
+2. Initializes a cache to store the latest data snapshot
+
+3. Spawns a background task that continuously:
+   - Receives data updates from TWS
+   - Updates the cache with latest values
+   - Sends HTTP notifications to all subscribed clients via `send_resource_updated()`
+
+**Key Point:** The server maintains a **cache + notify** pattern - it caches the latest data and sends notifications when it changes. Clients pull the data when ready.
+
+#### 2. TWS Client Layer
+
+**Stream Generator:**
+The `TWSClient.stream_market_data()` method is an async generator that:
+
+1. **Qualifies the contract** with Interactive Brokers
+2. **Subscribes to market data** via `ib.reqMktData()`
+3. **Waits for IB events** using `await self.ib.updateEvent`
+   - This is an asyncio.Event that fires when IB sends ANY update
+   - The code checks if the ticker has new data before yielding
+4. **Yields updates** only when timestamp changes (deduplication)
+
+**Event-Driven Design:**
+Instead of polling, the code uses `await self.ib.updateEvent` which blocks until Interactive Brokers sends an update. This is highly efficient.
+
+#### 3. MCP Client Subscription
+
+**Step-by-Step Workflow:**
+
+```javascript
+// 1. Connect to TWS
+await mcp.callTool("ibkr_connect", {
+  host: "127.0.0.1",
+  port: 7497,
+  clientId: 1
+});
+
+// 2. Start the streaming resource
+const result = await mcp.callTool("ibkr_start_market_data_resource", {
+  symbol: "AAPL",
+  secType: "STK",
+  exchange: "SMART",
+  currency: "USD"
+});
+// Returns: { resource_uri: "ibkr://market-data/AAPL", ... }
+
+// 3. Subscribe to the resource
+await mcp.subscribeToResource("ibkr://market-data/AAPL");
+
+// 4. Listen for notifications
+mcp.onResourceUpdated((uri) => {
+  if (uri === "ibkr://market-data/AAPL") {
+    // Resource changed, fetch latest data
+    const data = await mcp.readResource("ibkr://market-data/AAPL");
+    console.log("New market data:", data);
+  }
+});
+```
+
+### Data Flow Diagram
+
+```
+IB TWS/Gateway (TCP socket)
+    ↓
+ib_async library (ticker updates)
+    ↓ (await self.ib.updateEvent)
+TWSClient.stream_market_data() yields data
+    ↓ (async for data in ...)
+Background task stream_to_resource()
+    ↓ (updates cache + sends notification)
+ctx.session.send_resource_updated()
+    ↓ (HTTP notification via chunked transfer encoding)
+MCP Client receives notification
+    ↓ (onResourceUpdated callback)
+Client calls mcp.readResource()
+    ↓ (HTTP GET)
+Server returns cached data
+```
+
+### Key Design Patterns
+
+1. **Event-Driven**: Uses `await self.ib.updateEvent` instead of polling - highly efficient
+2. **Resource Pattern**: MCP's recommended approach for streaming data
+3. **Cache + Notify**: Server caches latest data, notifies on change, clients pull when ready
+4. **Background Tasks**: Each subscription runs in an independent `asyncio.Task`
+5. **HTTP Streaming**: Uses chunked transfer encoding (not WebSocket or SSE)
+6. **Deduplication**: Only yields when timestamp changes to avoid duplicate notifications
+
+### Example: Streaming Forex EUR/USD
+
+```javascript
+// Start streaming
+await mcp.callTool("ibkr_start_market_data_resource", {
+  symbol: "EUR",
+  secType: "CASH",
+  exchange: "IDEALPRO",
+  currency: "USD"
+});
+// Resource URI: ibkr://market-data/EUR.USD
+
+// Subscribe
+await mcp.subscribeToResource("ibkr://market-data/EUR.USD");
+
+// Receive automatic updates
+mcp.onResourceUpdated(async (uri) => {
+  if (uri === "ibkr://market-data/EUR.USD") {
+    const data = await mcp.readResource(uri);
+    console.log("EUR/USD:", data.bid, "/", data.ask);
+  }
+});
+```
+
+### Benefits of This Architecture
+
+- **Efficient**: Event-driven, no polling loops
+- **Scalable**: Independent background tasks per subscription
+- **MCP-Compliant**: Follows MCP protocol best practices
+- **Real-Time**: Sub-second latency from IB to client
+- **Reliable**: Automatic reconnection and error handling
 
 ---
 
@@ -114,15 +253,15 @@ await ibkr_start_market_data_resource({
 ```json
 {
   "status": "subscribed",
-  "resource_uri": "ibkr://market-data/AAPL_STK_SMART_USD",
-  "resource_id": "AAPL_STK_SMART_USD",
+  "resource_uri": "ibkr://market-data/AAPL",
+  "resource_id": "AAPL",
   "message": "Market data streaming started"
 }
 ```
 
 **Subscribe:**
 ```javascript
-subscribe("ibkr://market-data/AAPL_STK_SMART_USD");
+subscribe("ibkr://market-data/AAPL");
 ```
 
 **Updates:**
@@ -145,7 +284,7 @@ subscribe("ibkr://market-data/AAPL_STK_SMART_USD");
 **Stop:**
 ```javascript
 await ibkr_stop_market_data_resource({
-  resource_id: "AAPL_STK_SMART_USD"
+  resource_id: "AAPL"
 });
 ```
 
