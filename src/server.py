@@ -25,6 +25,7 @@ from .resources import (
     register_portfolio_resource,
     register_news_resource
 )
+from .prompts import register_all_prompts
 
 
 @asynccontextmanager
@@ -62,6 +63,9 @@ register_advanced_tools(mcp)
 register_market_data_resource(mcp)
 register_portfolio_resource(mcp)
 register_news_resource(mcp)
+
+# Register all prompts
+register_all_prompts(mcp)
 
 
 # Health check endpoint

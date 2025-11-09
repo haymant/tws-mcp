@@ -8,7 +8,8 @@ The server supports **HTTP Streaming** for MCP protocol and **WebSocket streamin
 
 *   **MCP Compliance:** Built with FastMCP for full adherence to the Model Context Protocol with HTTP streaming support.
 *   **Asynchronous TWS Integration:** Leverages `ib_async` (maintained fork of ib-insync) for non-blocking, asynchronous interaction with the TWS API.
-*   **Comprehensive Toolset:** Exposes tools for connection management, market data retrieval (historical and streaming), account and portfolio querying, and order management (placing and canceling orders).
+*   **Comprehensive Toolset:** 51+ tools for connection management, market data retrieval (historical and streaming), account and portfolio querying, and order management (placing and canceling orders).
+*   **MCP Prompts:** 6 guided workflows that combine multiple tools into expert-level trading strategies (bracket orders, portfolio rebalancing, risk assessment, options strategies, market analysis, and workspace setup).
 *   **Real-time WebSocket Streaming:** Three dedicated WebSocket endpoints for continuous real-time data:
     - **Market Data Stream** - Real-time quotes for multiple symbols
     - **Portfolio Stream** - Live portfolio and account updates
@@ -159,6 +160,24 @@ ws.onmessage = (event) => {
 
 For complete examples including portfolio streams and news bulletins, see [HTTP Streaming Examples](./docs/HTTP_STREAMING_EXAMPLES.md).
 
+## MCP Prompts
+
+The server includes 6 comprehensive prompts that provide guided workflows for complex trading operations:
+
+### Portfolio Management
+- **setup_trading_workspace** - Complete workspace setup with streaming resources
+- **rebalance_portfolio** - Portfolio rebalancing with tax optimization and OCA groups
+- **assess_portfolio_risk** - Risk analysis with beta weighting, VaR, and stress testing
+
+### Trading Execution  
+- **execute_bracket_order** - Bracket orders with take-profit and stop-loss automation
+- **execute_options_strategy** - Options strategies (covered calls, protective puts, collars, etc.)
+
+### Market Analysis
+- **analyze_market_conditions** - Multi-dimensional analysis combining technicals, fundamentals, news, and options
+
+Each prompt provides step-by-step workflows with tool call examples, best practices, risk warnings, and sample calculations. See [Prompts Guide](./docs/PROMPTS_GUIDE.md) for details.
+
 ## Getting Started
 
 Please refer to the [Setup Guide](./docs/SETUP.md) for detailed instructions on prerequisites, environment configuration, and running the server locally or in a container.
@@ -215,6 +234,7 @@ ibkr-tws-mcp-server/
 
 - **[Setup Guide](./docs/SETUP.md)** - Installation and configuration
 - **[API Reference](./docs/API.md)** - Complete tool documentation
+- **[Prompts Guide](./docs/PROMPTS_GUIDE.md)** - MCP prompts quick reference
 - **[Design Document](./docs/Design.md)** - Architecture and design decisions
 - **[HTTP Streaming Guide](./docs/HTTP_STREAMING_MIGRATION.md)** - Real-time streaming architecture
 - **[Streaming Examples](./docs/HTTP_STREAMING_EXAMPLES.md)** - Client code examples
