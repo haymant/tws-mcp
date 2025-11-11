@@ -15,6 +15,7 @@ The server supports **HTTP Streaming** for MCP protocol and **WebSocket streamin
     - **Portfolio Stream** - Live portfolio and account updates
     - **News Stream** - IBKR news bulletins and system messages
 *   **HTTP Streaming Transport:** Uses chunked transfer encoding for efficient MCP tool responses.
+*   **CORS Support:** Configured to allow cross-origin requests from browser-based MCP clients (e.g., Goflow, web applications).
 *   **Containerized Deployment:** Ready-to-use Docker and Docker Compose configuration.
 
 ## Architecture
@@ -78,11 +79,23 @@ SERVER_HOST=0.0.0.0
 SERVER_PORT=8000
 ```
 
-### 3. Start TWS/Gateway
+### 3. CORS Configuration (Browser Clients)
+
+The server is configured to allow cross-origin requests from browser-based MCP clients:
+
+- **Allowed Origins:** All origins (`*`) - supports external domains like `https://test.lizhao.net`
+- **Allowed Methods:** GET, POST, PUT, DELETE, OPTIONS, HEAD
+- **Allowed Headers:** All headers including MCP-specific headers (`Mcp-Session-Id`, `Mcp-Initialize-Request`)
+- **Credentials:** Enabled for authenticated requests
+- **Preflight Cache:** 24 hours
+
+This enables integration with browser-based MCP clients like Goflow without CORS restrictions.
+
+### 4. Start TWS/Gateway
 
 Launch Interactive Brokers TWS or IB Gateway and enable API connections.
 
-### 4. Run the Server
+### 5. Run the Server
 
 ```bash
 uv run python main.py

@@ -97,13 +97,40 @@ async def combined_lifespan(app_instance):
 # Replace the lifespan context - this combines MCP's task group init with our TWS setup
 mcp_base_app.router.lifespan_context = combined_lifespan
 
-# Add CORS middleware
+# Add CORS middleware for browser-based MCP clients
 app = CORSMiddleware(
     mcp_base_app,
-    allow_origins=["*"],
-    allow_methods=["GET", "POST", "DELETE", "OPTIONS"],
-    allow_headers=["*"],
-    expose_headers=["Mcp-Session-Id"],
+    allow_origins=["*"],  # Allow all origins for browser-based clients
+    allow_credentials=True,  # Allow credentials (cookies, authorization headers)
+    allow_methods=["GET", "POST", "PUT", "DELETE", "OPTIONS", "HEAD"],
+    allow_headers=[
+        "*",
+        "Content-Type",
+        "Authorization",
+        "X-Requested-With",
+        "Accept",
+        "Accept-Encoding",
+        "Accept-Language",
+        "Cache-Control",
+        "Connection",
+        "Host",
+        "Origin",
+        "Referer",
+        "Sec-Fetch-Dest",
+        "Sec-Fetch-Mode",
+        "Sec-Fetch-Site",
+        "User-Agent",
+        "Mcp-Session-Id",
+        "Mcp-Initialize-Request",
+    ],
+    expose_headers=[
+        "Mcp-Session-Id",
+        "Access-Control-Allow-Origin",
+        "Access-Control-Allow-Credentials",
+        "Access-Control-Allow-Methods",
+        "Access-Control-Allow-Headers",
+    ],
+    max_age=86400,  # Cache preflight for 24 hours
 )
 
 
