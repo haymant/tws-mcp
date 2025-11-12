@@ -5,7 +5,7 @@ BASE_URL="http://localhost:8000/api/v1"
 echo "=== Test 1: Connect to TWS ==="
 curl -X POST $BASE_URL/ibkr_connect \
   -H "Content-Type: application/json" \
-  -d '{"host": "127.0.0.1", "port": 7496, "clientId": 1}'
+  -d '{"host": "127.0.0.1", "port": 7497, "clientId": 1}'
 
 echo -e "\n\n=== Test 2: Get Positions ==="
 curl -X POST $BASE_URL/ibkr_get_positions

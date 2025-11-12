@@ -7,7 +7,7 @@ This directory contains diagnostic and testing scripts used during development a
 ### `test_tws_connection.py`
 Full diagnostic tool for testing TWS/IB Gateway connections with verbose logging.
 ```bash
-# Test with default settings (port 7496)
+# Test with default settings (port 7497)
 uv run python diagnostics/test_tws_connection.py
 
 # Test with custom port (paper trading)

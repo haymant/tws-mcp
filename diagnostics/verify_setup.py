@@ -50,7 +50,7 @@ async def verify_server():
         
         config = {
             "TWS_HOST": os.getenv("TWS_HOST", "127.0.0.1"),
-            "TWS_PORT": os.getenv("TWS_PORT", "7496"),
+            "TWS_PORT": os.getenv("TWS_PORT", "7497"),
             "SERVER_HOST": os.getenv("SERVER_HOST", "0.0.0.0"),
             "SERVER_PORT": os.getenv("SERVER_PORT", "8000"),
             "API_PREFIX": os.getenv("API_PREFIX", "/api/v1"),

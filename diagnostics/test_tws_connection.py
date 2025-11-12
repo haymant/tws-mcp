@@ -8,7 +8,7 @@ import asyncio
 import sys
 from ib_async import IB
 
-async def test_tws_connection(host="127.0.0.1", port=7496, client_id=1):
+async def test_tws_connection(host="127.0.0.1", port=7497, client_id=1):
     """Test direct connection to TWS/IB Gateway."""
 
     print("=" * 70)
@@ -83,7 +83,7 @@ async def test_tws_connection(host="127.0.0.1", port=7496, client_id=1):
         print("\nTroubleshooting:")
         print("  1. Make sure TWS/IB Gateway is running")
         print("  2. Verify the correct port:")
-        print("     - TWS Live: 7496")
+        print("     - TWS Live: 7497")
         print("     - TWS Paper: 7497")
         print("     - IB Gateway Live: 4001")
         print("     - IB Gateway Paper: 4002")
@@ -114,7 +114,7 @@ def main():
     
     parser = argparse.ArgumentParser(description="Test TWS/IB Gateway connection")
     parser.add_argument("--host", default="127.0.0.1", help="TWS host (default: 127.0.0.1)")
-    parser.add_argument("--port", type=int, default=7496, help="TWS port (default: 7496)")
+    parser.add_argument("--port", type=int, default=7497, help="TWS port (default: 7497)")
     parser.add_argument("--client-id", type=int, default=1, help="Client ID (default: 1)")
     
     args = parser.parse_args()

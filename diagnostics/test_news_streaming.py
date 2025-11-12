@@ -29,7 +29,7 @@ def main():
         "name": "ibkr_connect",
         "arguments": {
             "host": "127.0.0.1",
-            "port": 7496,
+            "port": 7497,
             "clientId": 1
         }
     })

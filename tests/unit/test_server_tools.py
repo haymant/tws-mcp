@@ -85,7 +85,7 @@ def mock_app_context():
 async def test_ibkr_connect_tool(mock_app_context):
     """Test the ibkr_connect MCP tool."""
     host = "127.0.0.1"
-    port = 7496
+    port = 7497
     clientId = 1
     
     result = await ibkr_connect(mock_app_context, host, port, clientId)

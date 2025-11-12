@@ -26,7 +26,7 @@ def register_portfolio_prompts(mcp: FastMCP):
 Set up a complete trading workspace with real-time market data, portfolio monitoring, and news alerts.
 
 ## Prerequisites
-- TWS or IB Gateway running on localhost:7496 (paper) or 4001 (live)
+- TWS or IB Gateway running on localhost:7497 (paper) or 4001 (live)
 - Market data subscriptions active for {symbol}
 
 ## Step-by-Step Workflow
@@ -36,7 +36,7 @@ Set up a complete trading workspace with real-time market data, portfolio monito
 ```
 ibkr_connect(
     host="127.0.0.1",
-    port=7496,  # 7496 for TWS paper, 4001 for IB Gateway paper
+    port=7497,  # 7497 for TWS paper, 4001 for IB Gateway paper
     clientId=1
 )
 ```

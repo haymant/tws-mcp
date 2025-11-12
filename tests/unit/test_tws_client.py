@@ -87,10 +87,10 @@ async def test_connect_success():
     client.ib.isConnected.return_value = False
     client.ib.connectAsync.return_value = None
     
-    result = await client.connect("127.0.0.1", 7496, 2)
+    result = await client.connect("127.0.0.1", 7497, 2)
     
     assert result is True
-    client.ib.connectAsync.assert_called_once_with("127.0.0.1", 7496, clientId=2, timeout=5)
+    client.ib.connectAsync.assert_called_once_with("127.0.0.1", 7497, clientId=2, timeout=5)
 
 @pytest.mark.asyncio
 async def test_connect_already_connected():
@@ -100,7 +100,7 @@ async def test_connect_already_connected():
     client.ib = MockIB()
     client.ib.isConnected.return_value = True
     
-    result = await client.connect("127.0.0.1", 7496, 1)
+    result = await client.connect("127.0.0.1", 7497, 1)
     
     assert result is True
     client.ib.connectAsync.assert_not_called()

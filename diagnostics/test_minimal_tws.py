@@ -12,11 +12,11 @@ async def test():
         print("=" * 60)
         print("Minimal TWS API Connection Test")
         print("=" * 60)
-        print("\n⏳ Attempting connection to 127.0.0.1:7496...")
+        print("\n⏳ Attempting connection to 127.0.0.1:7497...")
         print("   Using Client ID: 999")
         print("   Timeout: 20 seconds\n")
         
-        await ib.connectAsync('127.0.0.1', 7496, clientId=999, timeout=20)
+        await ib.connectAsync('127.0.0.1', 7497, clientId=999, timeout=20)
         
         print("✅ SUCCESS! API connection established.")
         print(f"\n📊 Connected accounts: {ib.managedAccounts()}")

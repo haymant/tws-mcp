@@ -35,7 +35,7 @@ async def main():
                 "method": "tools/call",
                 "params": {
                     "name": "ibkr_connect",
-                    "arguments": {"host": "127.0.0.1", "port": 7496, "clientId": 1}
+                    "arguments": {"host": "127.0.0.1", "port": 7497, "clientId": 1}
                 },
                 "id": 1
             })

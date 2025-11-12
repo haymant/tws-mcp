@@ -48,7 +48,7 @@ The server supports **HTTP Streaming** for MCP protocol and **WebSocket streamin
          ▼
 ┌─────────────────────────────────────────────────┐
 │  TWS / IB Gateway                                │
-│  (127.0.0.1:7496 or :4001)                      │
+│  (127.0.0.1:7497 or :4001)                      │
 └─────────────────────────────────────────────────┘
 ```
 
@@ -72,7 +72,7 @@ cp .env.example .env
 
 # Edit .env with your settings
 TWS_HOST=127.0.0.1
-TWS_PORT=7496
+TWS_PORT=7497
 TWS_CLIENT_ID=1
 TWS_PAPER_ACCOUNT=DU2515295
 SERVER_HOST=0.0.0.0
@@ -115,7 +115,7 @@ curl -X POST http://localhost:8000/api/v1/mcp \
     "method": "tools/call",
     "params": {
       "name": "ibkr_connect",
-      "arguments": {"host": "127.0.0.1", "port": 7496, "clientId": 1}
+      "arguments": {"host": "127.0.0.1", "port": 7497, "clientId": 1}
     },
     "id": 1
   }'

@@ -50,7 +50,7 @@ async def test_portfolio_rebalancing_workflow():
     """
     
     TWS_HOST = os.getenv("TWS_HOST", "127.0.0.1")
-    TWS_PORT = int(os.getenv("TWS_PORT", 7496))
+    TWS_PORT = int(os.getenv("TWS_PORT", 7497))
     TWS_CLIENT_ID = int(os.getenv("TWS_CLIENT_ID", 1))
     
     print("=" * 60)

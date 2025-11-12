@@ -21,7 +21,7 @@ async def test_in_loop_2(client):
     try:
         # This would fail with "different loop" error before the fix
         # Now it works because connect() recreates the IB instance
-        await client.connect("127.0.0.1", 7496, 1)
+        await client.connect("127.0.0.1", 7497, 1)
         print("  ✗ Connect succeeded (TWS not running - unexpected)")
     except ConnectionError as e:
         # Expected: connection fails because TWS is not running

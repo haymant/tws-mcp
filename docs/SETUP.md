@@ -42,7 +42,7 @@ Before starting, ensure you have the following installed:
     ```bash
     # TWS/IB Gateway Connection
     TWS_HOST=127.0.0.1
-    TWS_PORT=7496  # 7496 for TWS, 4001 for IB Gateway Paper, 4002 for IB Gateway Live
+    TWS_PORT=7497  # 7497 for TWS, 4001 for IB Gateway Paper, 4002 for IB Gateway Live
     TWS_CLIENT_ID=1
 
     # Server Configuration
@@ -251,6 +251,6 @@ curl -sS http://localhost:8000/health || curl -sS http://localhost:8000/api/v1/m
 
 | Issue | Potential Cause | Solution |
 | :--- | :--- | :--- |
-| `ConnectionRefusedError` | TWS/IB Gateway is not running, or the port is incorrect. | Ensure TWS/IB Gateway is running and logged in. Verify `TWS_PORT` in `.env` is correct (e.g., 7496, 4001). |
+| `ConnectionRefusedError` | TWS/IB Gateway is not running, or the port is incorrect. | Ensure TWS/IB Gateway is running and logged in. Verify `TWS_PORT` in `.env` is correct (e.g., 7497, 4001). |
 | `ib_async` timeout | TWS/IB Gateway is running but the connection is blocked. | Check firewall settings. Ensure the host and client ID are correct. |
 | Docker connection issue | `host.docker.internal` not resolving. | Ensure your Docker version supports `host-gateway`. Try replacing `host.docker.internal` with your host machine's IP address in the `.env` file. |

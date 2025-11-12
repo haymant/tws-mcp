@@ -74,7 +74,7 @@ mcp = FastMCP("IBKR TWS MCP Server")
 @mcp.tool()
 async def ibkr_connect(
     host: str = "127.0.0.1",
-    port: int = 7496,
+    port: int = 7497,
     clientId: int = 1,
     ctx: Context[ServerSession, Any] = None
 ) -> Dict[str, str]:
@@ -83,7 +83,7 @@ async def ibkr_connect(
     
     Args:
         host: TWS/IB Gateway host address
-        port: TWS/IB Gateway port (7496 for TWS, 4001 for IB Gateway paper, 4002 for live)
+        port: TWS/IB Gateway port (7497 for TWS, 4001 for IB Gateway paper, 4002 for live)
         clientId: Unique client ID for this connection
         ctx: MCP context (auto-injected)
     
@@ -423,7 +423,7 @@ services:
       - "8000:8000"
     environment:
       - TWS_HOST=${TWS_HOST:-host.docker.internal}
-      - TWS_PORT=${TWS_PORT:-7496}
+      - TWS_PORT=${TWS_PORT:-7497}
       - TWS_CLIENT_ID=${TWS_CLIENT_ID:-1}
       - PORT=8000
     extra_hosts:
@@ -632,7 +632,7 @@ SIT will be performed by running the MCP server (connected to a paper trading TW
 
 ```bash
 # 1. Connect to TWS
-curl -X POST http://localhost:8000/api/v1/connect_tws -H "Content-Type: application/json" -d '{"host": "127.0.0.1", "port": 7496, "clientId": 1}'
+curl -X POST http://localhost:8000/api/v1/connect_tws -H "Content-Type: application/json" -d '{"host": "127.0.0.1", "port": 7497, "clientId": 1}'
 
 # 2. Get current positions
 curl http://localhost:8000/api/v1/get_positions

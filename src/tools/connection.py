@@ -18,14 +18,14 @@ def register_connection_tools(mcp: FastMCP):
     async def ibkr_connect(
         ctx: Context[ServerSession, AppContext],
         host: str = os.getenv("TWS_HOST", "127.0.0.1"),
-        port: int = int(os.getenv("TWS_PORT", 7496)),
+        port: int = int(os.getenv("TWS_PORT", 7497)),
         clientId: int = int(os.getenv("TWS_CLIENT_ID", 1))
     ) -> Dict[str, Any]:
         """Connect to TWS/IB Gateway.
         
         Args:
             host: TWS/Gateway host (default: 127.0.0.1)
-            port: TWS/Gateway port (7496 for TWS, 4001 for IB Gateway Paper, 4002 for Live)
+            port: TWS/Gateway port (7497 for TWS, 4001 for IB Gateway Paper, 4002 for Live)
             clientId: Unique client ID (default: 1)
             
         Returns:
